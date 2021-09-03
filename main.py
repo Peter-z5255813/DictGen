@@ -11,6 +11,10 @@ TODO
 - Save and load pre-existing lists.
 """
 
+from helpers import *
+
+
+
 def main():
     """
     main()
@@ -128,12 +132,12 @@ def main():
     print("OK! Ready to process!")
     finalDict = perm(nameList, actionList, dateList, miscList, fuzzerList)
 
-    print("All done! Heres your custom dictionary:\n")
+    print("All done! Heres a preview of your custom dictionary:\n")
+    print("You can find the full text in your current directory!\n")
     file = open("customDict.txt", "w")
     for i in finalDict:
         file.write(i + "\n")
         print(i)
-
     return
 
 
@@ -206,23 +210,24 @@ def addDate(specifiedList):
 
 def perm(nameList, actionList, dateList, miscList, fuzzerList):
     finalDict = []
+    # First, add single, basic instances of each entity.
+    listAppend(finalDict, nameList)
+    listAppend(finalDict, actionList)
+    listAppend(finalDict, dateList)
+    listAppend(finalDict, miscList)
+    listAppend(finalDict, fuzzerList)
 
-    for i in nameList:
-        finalDict.append(i)
-    for i in actionList:
-        finalDict.append(i)
-    for i in dateList:
-        finalDict.append(i)
-    for i in miscList:
-        finalDict.append(i)
-    for i in fuzzerList:
-        finalDict.append(i)                        
+    # Next, try to permuate within each catagory (Not all catagories are featured, just notable ones. Dates are not commonly found appended together, and fuzzerList already contains
+    # notable combinations, thus should not have any additional permutations performed).
+    listAppend(finalDict, concatPermutation(nameList))
+    listAppend(finalDict, concatPermutation(actionList))
+    listAppend(finalDict, concatPermutation(miscList))
+
+
+    # TODO
+    # Check for activated modules
+
     return finalDict
-
-
-
-
-
 
 
 """
@@ -240,8 +245,26 @@ def leetReplacer(word):
     '''
     This module will replace letters with its 'leet' equivalent
     '''
-    #TODO
-    return
+    # TODO
+    # - Explore partial permutations
+    counter = 0
+    leetWord = ""
+    leetDatabase = {
+        "e":"3",
+        "o":"0",
+        "i":"1",
+        "a":"4",
+        "s":"5",
+        "s":"z",
+        "g":"6",
+    }
+    for c in word:
+        for entry in leetDatabase:
+            if c.lower() in entry:
+                c = leetDatabase[c.lower()]      
+        leetWord += c
+        counter += 1
+    return leetWord
 
 
 def numberFuzzer(word):
@@ -262,7 +285,7 @@ def upperlowercase(word):
 
 def datePermutation(word):
     '''
-    This module will change dates to popular permutations
+    This module will change dates to popular alternate representations
     '''
     #TODO
     return
@@ -270,7 +293,7 @@ def datePermutation(word):
 
 def spacePermutation(word):
     '''
-    This module will change spaces to other fillers
+    This module will change spaces to other fillers such as hypens or underlines
     '''
     #TODO
     return
