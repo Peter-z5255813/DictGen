@@ -21,7 +21,8 @@ My project is intended to alleviate the first problem of time. Through spending 
 
 ## Design
 <TODO>
-- Fill in how this works
+- This section tends to update with every commit so for now i'll leave it as is
+- Coming soon!
 </TODO>
 
 ## Goals
